@@ -228,6 +228,10 @@ DetourCrowdAgent::applyNewTarget()
         return;
     }
 
+    _targetPosition.x = finalTargetPos[0];
+    _targetPosition.y = finalTargetPos[1];
+    _targetPosition.z = finalTargetPos[2];
+
     // Set the movement target
     if (!_crowd->requestMoveTarget(_agentIndex, targetRef, finalTargetPos))
     {
