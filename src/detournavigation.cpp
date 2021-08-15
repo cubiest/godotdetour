@@ -51,7 +51,7 @@ DetourNavigation::_register_methods()
     register_method("addOffMeshConnection", &DetourNavigation::addOffMeshConnection);
     register_method("removeOffMeshConnection", &DetourNavigation::removeOffMeshConnection);
 
-    register_signal<DetourNavigation>("navigation_tick_done", "executionTimeSeconds", Variant::INT);
+    register_signal<DetourNavigation>("navigation_tick_done", "executionTimeSeconds", Variant::REAL);
 }
 
 DetourNavigation::DetourNavigation()
@@ -951,9 +951,11 @@ DetourNavigation::navigationThreadFunction()
         _navigationMutex->unlock();
 
         // Calculate how long the calculations took and emit the done signal
-        auto timeTaken = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start).count();
-        lastExecutionTime = timeTaken / 1000.0;
-        emit_signal("navigation_tick_done", lastExecutionTime);
+        const int64_t timeTaken = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - start).count();
+        const float microToMilli = 1000.0F;
+        const float microToS = 1000000.0F;
+        lastExecutionTime = timeTaken / microToS;
+        emit_signal("navigation_tick_done", timeTaken / microToMilli);
     }
     Godot::print("DTNav: Navigation thread ended");
 }
