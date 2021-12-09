@@ -84,6 +84,8 @@ namespace godot
          */
         bool initialize(Variant inputMeshInstance, Ref<DetourNavigationParameters> parameters);
 
+        std::vector<DetourNavigationMesh *> getNavMeshes();
+
         /**
          * @brief Rebuilds all tiles that have changed (by marking areas).
          */

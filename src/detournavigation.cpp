@@ -157,6 +157,12 @@ DetourNavigation::initialize(Variant inputMeshInstance, Ref<DetourNavigationPara
     return true;
 }
 
+std::vector<DetourNavigationMesh *>
+DetourNavigation::getNavMeshes()
+{
+    return _navMeshes;
+}
+
 void
 DetourNavigation::rebuildChangedTiles()
 {
